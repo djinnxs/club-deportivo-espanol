@@ -31,10 +31,15 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
+
+# assets fuente locales (las imágenes servidas van en /public)
+/images/
 
 # typescript
 *.tsbuildinfo

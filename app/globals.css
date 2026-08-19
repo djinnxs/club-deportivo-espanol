@@ -2,25 +2,38 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1f2430;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-cde-rojo: #e11d2e;
+  --color-cde-rojo-oscuro: #a31524;
+  --color-cde-azul: #123a8f;
+  --color-cde-gris: #1f2430;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.cde-gradient {
+  background: linear-gradient(135deg, #e11d2e 0%, #a31524 100%);
+}
+
+.cde-gradient-azul {
+  background: linear-gradient(135deg, #123a8f 0%, #0b2a6b 100%);
+}
+
+.cde-shadow {
+  box-shadow: 0 4px 14px rgba(225, 29, 46, 0.18);
+}
+
+.cde-shadow-azul {
+  box-shadow: 0 10px 30px rgba(18, 58, 143, 0.25);
 }

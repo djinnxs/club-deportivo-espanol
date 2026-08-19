@@ -1,69 +1,200 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ASSETS, CDE } from "@/lib/config";
+import { fetchTeamMatches } from "@/lib/matches";
+import MatchWidget from "@/components/MatchWidget";
+import { CalendarDays, Trophy, Users, MapPin } from "lucide-react";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+function formatNextMatchDate(iso: string): string {
+  return new Intl.DateTimeFormat("es-AR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(iso));
+}
+
+export default async function Home() {
+  let matches: Awaited<ReturnType<typeof fetchTeamMatches>> = [];
+  try {
+    matches = await fetchTeamMatches();
+  } catch (e) {
+    console.error("Error cargando partidos:", e);
+  }
+
+  const upcoming = matches
+    .filter((m) => m.status === "notstarted")
+    .sort((a, b) => a.startTime.localeCompare(b.startTime));
+  const nextMatch = upcoming[0];
+  const lastFinished = matches
+    .filter((m) => m.status === "finished")
+    .sort((a, b) => b.startTime.localeCompare(a.startTime))[0];
+
+  const stats = [
+    { icon: Trophy, label: "Campeonatos", value: "8+" },
+    { icon: CalendarDays, label: "Años de historia", value: "70" },
+    { icon: Users, label: "Socios", value: "2.000+" },
+    { icon: MapPin, label: "Estadio", value: "Nueva España" },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div>
+      <section className="cde-gradient-azul text-white">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-16 md:flex-row md:py-20">
+          <div className="flex-1 text-center md:text-left">
+            <p className="mb-2 inline-block rounded-full bg-white/15 px-4 py-1 text-sm font-bold uppercase tracking-widest">
+              Furia Roja · Fundado en 1956
+            </p>
+            <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
+              Club Deportivo Español
+            </h1>
+            <p className="mx-auto mt-4 max-w-lg text-lg text-white/90 md:mx-0">
+              Más de seis décadas de pasión, historia y garra en el fútbol
+              argentino. Hoy, peleando cada torneo en Primera C.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
+              <Link
+                href="/historia"
+                className="rounded-md cde-gradient px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+              >
+                Nuestra historia
+              </Link>
+              <Link
+                href="/socios"
+                className="rounded-md border border-white/40 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
+              >
+                Hacete socio
+              </Link>
+            </div>
+          </div>
+          <div className="relative flex-1">
+            <div className="mx-auto flex aspect-square w-64 items-center justify-center rounded-full bg-white/10 ring-4 ring-white/30 cde-shadow-azul md:w-72">
+              <Image
+                src={ASSETS.logo}
+                alt={`${CDE.name} - escudo`}
+                width={200}
+                height={200}
+                className="h-auto w-44 object-contain md:w-52"
+                priority
+              />
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="border-t border-white/15">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 md:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label} className="flex items-center gap-3">
+                <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-white/15">
+                  <s.icon className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-xl font-extrabold">{s.value}</p>
+                  <p className="text-xs uppercase tracking-wider text-white/70">
+                    {s.label}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          {nextMatch ? (
+            <div className="mb-6 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-sm font-bold uppercase tracking-wider text-cde-azul">
+                  Próximo partido
+                </span>
+                <span className="rounded-full bg-cde-rojo/10 px-3 py-1 text-xs font-bold text-cde-rojo">
+                  {nextMatch.stage}
+                </span>
+              </div>
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+                <p className="text-right text-lg font-extrabold text-cde-gris">
+                  {nextMatch.home.name}
+                </p>
+                <span className="rounded-lg bg-cde-azul px-4 py-2 text-sm font-black uppercase tracking-wider text-white">
+                  VS
+                </span>
+                <p className="text-lg font-extrabold text-cde-gris">
+                  {nextMatch.away.name}
+                </p>
+              </div>
+              <p className="mt-4 flex items-center justify-center gap-2 text-sm text-zinc-500">
+                <CalendarDays className="h-4 w-4" />
+                {formatNextMatchDate(nextMatch.startTime)}
+              </p>
+            </div>
+          ) : null}
+
+          <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">
+            Partidos
+          </h2>
+          <MatchWidget matches={matches} />
+        </div>
+
+        <div>
+          <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">
+            Último resultado
+          </h2>
+          {lastFinished ? (
+            <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+              <div className="mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-zinc-500">
+                <span>{lastFinished.stage}</span>
+                <span>{lastFinished.competition}</span>
+              </div>
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+                <p className="truncate text-right text-sm font-semibold">
+                  {lastFinished.home.name}
+                </p>
+                <span className="min-w-14 rounded-md bg-zinc-100 px-2 py-1 text-center font-mono text-base font-bold">
+                  {lastFinished.homeScore} - {lastFinished.awayScore}
+                </span>
+                <p className="truncate text-sm font-semibold">
+                  {lastFinished.away.name}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center text-sm text-zinc-500">
+              Sin resultados por el momento.
+            </div>
+          )}
+
+          <h2 className="mb-4 mt-8 text-2xl font-extrabold text-cde-gris">
+            Galería
+          </h2>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              ASSETS.galeria.ig1,
+              ASSETS.galeria.socio1,
+              ASSETS.galeria.socio2,
+              ASSETS.club.valores,
+            ].map((src, i) => (
+              <Link
+                key={src}
+                href="/galeria"
+                className="group relative aspect-square overflow-hidden rounded-lg"
+              >
+                <Image
+                  src={src}
+                  alt={`Foto CDE ${i + 1}`}
+                  width={300}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <span className="absolute inset-0 bg-cde-azul/0 transition-colors group-hover:bg-cde-azul/20" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
