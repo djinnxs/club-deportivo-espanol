@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ASSETS, CDE } from "@/lib/config";
 import { fetchTeamMatches } from "@/lib/matches";
 import MatchWidget from "@/components/MatchWidget";
+import { TeamShield } from "@/components/TeamShield";
 import { CalendarDays, Trophy, Users, MapPin } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -75,9 +76,9 @@ export default async function Home() {
               <Image
                 src={ASSETS.logo}
                 alt={`${CDE.name} - escudo`}
-                width={200}
-                height={200}
-                className="h-auto w-44 object-contain md:w-52"
+                width={240}
+                height={240}
+                className="h-auto w-56 object-contain md:w-64"
                 priority
               />
             </div>
@@ -116,15 +117,21 @@ export default async function Home() {
                 </span>
               </div>
               <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-                <p className="text-right text-lg font-extrabold text-cde-gris">
-                  {nextMatch.home.name}
-                </p>
+                <div className="flex items-center justify-end gap-2">
+                  <p className="text-right text-lg font-extrabold text-cde-gris">
+                    {nextMatch.home.name}
+                  </p>
+                  <TeamShield src={nextMatch.home.logo} alt={nextMatch.home.name} size={40} />
+                </div>
                 <span className="rounded-lg bg-cde-azul px-4 py-2 text-sm font-black uppercase tracking-wider text-white">
                   VS
                 </span>
-                <p className="text-lg font-extrabold text-cde-gris">
-                  {nextMatch.away.name}
-                </p>
+                <div className="flex items-center justify-start gap-2">
+                  <TeamShield src={nextMatch.away.logo} alt={nextMatch.away.name} size={40} />
+                  <p className="text-lg font-extrabold text-cde-gris">
+                    {nextMatch.away.name}
+                  </p>
+                </div>
               </div>
               <p className="mt-4 flex items-center justify-center gap-2 text-sm text-zinc-500">
                 <CalendarDays className="h-4 w-4" />
@@ -150,15 +157,21 @@ export default async function Home() {
                 <span>{lastFinished.competition}</span>
               </div>
               <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-                <p className="truncate text-right text-sm font-semibold">
-                  {lastFinished.home.name}
-                </p>
+                <div className="flex items-center justify-end gap-2">
+                  <p className="truncate text-right text-sm font-semibold">
+                    {lastFinished.home.name}
+                  </p>
+                  <TeamShield src={lastFinished.home.logo} alt={lastFinished.home.name} size={28} />
+                </div>
                 <span className="min-w-14 rounded-md bg-zinc-100 px-2 py-1 text-center font-mono text-base font-bold">
                   {lastFinished.homeScore} - {lastFinished.awayScore}
                 </span>
-                <p className="truncate text-sm font-semibold">
-                  {lastFinished.away.name}
-                </p>
+                <div className="flex items-center justify-start gap-2">
+                  <TeamShield src={lastFinished.away.logo} alt={lastFinished.away.name} size={28} />
+                  <p className="truncate text-sm font-semibold">
+                    {lastFinished.away.name}
+                  </p>
+                </div>
               </div>
             </div>
           ) : (

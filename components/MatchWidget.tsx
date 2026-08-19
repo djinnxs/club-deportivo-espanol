@@ -1,5 +1,6 @@
 import type { Match } from "@/lib/matches";
 import { CalendarDays } from "lucide-react";
+import { TeamShield } from "@/components/TeamShield";
 
 const STATUS_LABELS: Record<Match["status"], string> = {
   live: "EN VIVO",
@@ -47,15 +48,21 @@ function MatchCard({ match }: { match: Match }) {
         )}
       </div>
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-        <p className="truncate text-right text-sm font-semibold">
-          {match.home.name}
-        </p>
+        <div className="flex items-center justify-end gap-2">
+          <p className="truncate text-right text-sm font-semibold">
+            {match.home.name}
+          </p>
+          <TeamShield src={match.home.logo} alt={match.home.name} />
+        </div>
         <span className="min-w-14 rounded-md bg-zinc-100 px-2 py-1 text-center font-mono text-base font-bold">
           {hasScore
             ? `${match.homeScore} - ${match.awayScore}`
             : "VS"}
         </span>
-        <p className="truncate text-sm font-semibold">{match.away.name}</p>
+        <div className="flex items-center justify-start gap-2">
+          <TeamShield src={match.away.logo} alt={match.away.name} />
+          <p className="truncate text-sm font-semibold">{match.away.name}</p>
+        </div>
       </div>
       <p className="mt-2 flex items-center justify-center gap-1.5 text-xs text-zinc-500">
         <CalendarDays className="h-3.5 w-3.5" />

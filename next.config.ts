@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "upplulzyshwzlwrohekm.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.promiedos.com.ar",
+        pathname: "/images/team/**",
+      },
     ],
   },
 };

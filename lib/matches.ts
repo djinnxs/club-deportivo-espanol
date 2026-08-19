@@ -69,6 +69,10 @@ interface RawNextData {
 const TEAM_SLUG = "deportivo-espanol";
 const TEAM_ID = "hbad";
 
+function teamLogo(teamId?: string): string | undefined {
+  return teamId ? `https://api.promiedos.com.ar/images/team/${teamId}/4` : undefined;
+}
+
 function normalizeStatus(enumVal: number | undefined, name?: string): MatchStatus {
   const n = name?.toLowerCase() ?? "";
   if (enumVal === 2 || n.includes("en vivo") || n.includes("live")) return "live";
@@ -100,11 +104,13 @@ function toMatch(game: RawGame, competition?: string): Match | null {
       id: home.id ?? "",
       name: home.name ?? "Local",
       shortName: home.short_name ?? home.name ?? "Local",
+      logo: teamLogo(home.id),
     },
     away: {
       id: away.id ?? "",
       name: away.name ?? "Visitante",
       shortName: away.short_name ?? away.name ?? "Visitante",
+      logo: teamLogo(away.id),
     },
     homeScore: typeof homeScore === "number" ? homeScore : undefined,
     awayScore: typeof awayScore === "number" ? awayScore : undefined,

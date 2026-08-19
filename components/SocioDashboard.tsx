@@ -102,9 +102,9 @@ export default function SocioDashboard() {
             <Image
               src={ASSETS.logo}
               alt="Escudo CDE"
-              width={56}
-              height={56}
-              className="h-14 w-14 object-contain"
+              width={64}
+              height={64}
+              className="h-16 w-16 object-contain"
             />
             <div>
               <p className="text-lg font-extrabold text-cde-gris">
