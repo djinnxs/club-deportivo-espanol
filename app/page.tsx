@@ -78,7 +78,7 @@ export default async function Home() {
                 alt={`${CDE.name} - escudo`}
                 width={240}
                 height={240}
-                className="h-auto w-56 object-contain md:w-64"
+                className="mt-1 h-auto w-56 object-contain md:w-64"
                 priority
               />
             </div>
