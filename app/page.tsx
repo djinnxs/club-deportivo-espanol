@@ -3,6 +3,10 @@ import Link from "next/link";
 import { ASSETS, CDE } from "@/lib/config";
 import { fetchTeamMatches } from "@/lib/matches";
 import MatchWidget from "@/components/MatchWidget";
+import NewsMarquee from "@/components/NewsMarquee";
+import MatchdayCountdown from "@/components/MatchdayCountdown";
+import StadiumSection from "@/components/StadiumSection";
+import MembershipPlans from "@/components/MembershipPlans";
 import { TeamShield } from "@/components/TeamShield";
 import { CalendarDays, Trophy, Users, MapPin } from "lucide-react";
 
@@ -29,7 +33,8 @@ export default async function Home() {
   const upcoming = matches
     .filter((m) => m.status === "notstarted")
     .sort((a, b) => a.startTime.localeCompare(b.startTime));
-  const nextMatch = upcoming[0];
+  const nextMatch = upcoming[0] ?? null;
+
   const lastFinished = matches
     .filter((m) => m.status === "finished")
     .sort((a, b) => b.startTime.localeCompare(a.startTime))[0];
@@ -43,66 +48,49 @@ export default async function Home() {
 
   return (
     <div>
-      <section className="cde-gradient-azul text-white">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-16 md:flex-row md:py-20">
-          <div className="flex-1 text-center md:text-left">
-            <p className="mb-2 inline-block rounded-full bg-white/15 px-4 py-1 text-sm font-bold uppercase tracking-widest">
+      {/* Marquesina pegada al header */}
+      <NewsMarquee />
+
+      {/* Hero */}
+      <section className="cde-gradient-azul cde-stripes relative overflow-hidden text-white">
+        <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+          <div className="max-w-2xl">
+            <p className="mb-2 inline-block rounded-full bg-white/15 px-4 py-1 text-sm font-bold uppercase tracking-widest text-black">
               Furia Roja · Fundado en 1956
             </p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
-              Club Deportivo Español
+            <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-black md:text-6xl">
+              Club Deportivo <br className="hidden md:block" />
+              <span className="text-black">Español</span>
             </h1>
-            <p className="mx-auto mt-4 max-w-lg text-lg text-white/90 md:mx-0">
+            <p className="mx-auto mt-4 max-w-lg text-lg text-black/90 md:mx-0">
               Más de seis décadas de pasión, historia y garra en el fútbol
               argentino. Hoy, peleando cada torneo en Primera C.
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
-              <Link
-                href="/historia"
-                className="rounded-md cde-gradient px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
-              >
-                Nuestra historia
-              </Link>
-              <Link
-                href="/socios"
-                className="rounded-md border border-white/40 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
-              >
-                Hacete socio
-              </Link>
-            </div>
           </div>
-          <div className="relative flex-1">
-            <div className="mx-auto flex aspect-square w-64 items-center justify-center rounded-full bg-white/10 ring-4 ring-white/30 cde-shadow-azul md:w-72">
-              <Image
-                src={ASSETS.logo}
-                alt={`${CDE.name} - escudo`}
-                width={240}
-                height={240}
-                className="mt-2 h-auto w-56 object-contain md:w-64"
-                priority
-              />
-            </div>
-          </div>
-        </div>
 
-        <div className="border-t border-white/15">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-white/15">
-                  <s.icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="text-xl font-extrabold">{s.value}</p>
-                  <p className="text-xs uppercase tracking-wider text-white/70">
-                    {s.label}
-                  </p>
+          {/* Estadísticas en negro */}
+          <div className="mt-10 border-t border-white/15 pt-8">
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+              {stats.map((s) => (
+                <div key={s.label} className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-black/10">
+                    <s.icon className="h-5 w-5 text-black" />
+                  </span>
+                  <div>
+                    <p className="text-xl font-extrabold text-black">{s.value}</p>
+                    <p className="text-xs uppercase tracking-wider text-black/70">
+                      {s.label}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Cuenta regresiva debajo de las estadísticas */}
+      <MatchdayCountdown match={nextMatch} />
 
       <section className="mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
@@ -151,7 +139,6 @@ export default async function Home() {
                 </div>
               </div>
             )}
-
             {lastFinished ? (
               <div className="flex flex-col rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
                 <div className="mb-3 flex items-center justify-between">
@@ -197,17 +184,11 @@ export default async function Home() {
               </div>
             )}
           </div>
-
-          <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">
-            Partidos
-          </h2>
+          <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">Partidos</h2>
           <MatchWidget matches={matches} />
         </div>
-
         <div>
-          <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">
-            Galería
-          </h2>
+          <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">Galería</h2>
           <div className="grid grid-cols-2 gap-3">
             {[
               ASSETS.galeria.ig1,
@@ -233,6 +214,10 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <StadiumSection />
+
+      <MembershipPlans />
     </div>
   );
 }

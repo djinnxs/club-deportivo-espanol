@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,16 +24,20 @@ export const metadata: Metadata = {
     "Sitio oficial del Club Deportivo Español. Historia, logros, agenda de partidos, galería y zona de socios del club fundado en 1956.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+type Props = {
+  children: React.ReactNode;
+};
+
+export default function RootLayout({ children }: Props) {
   return (
-    <html
-      lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
+    <html lang="es">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex min-h-screen flex-col">{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
