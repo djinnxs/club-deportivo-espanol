@@ -78,7 +78,7 @@ export default async function Home() {
                 alt={`${CDE.name} - escudo`}
                 width={240}
                 height={240}
-                className="mt-1 h-auto w-56 object-contain md:w-64"
+                className="mt-2 h-auto w-56 object-contain md:w-64"
                 priority
               />
             </div>
@@ -106,39 +106,97 @@ export default async function Home() {
 
       <section className="mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          {nextMatch ? (
-            <div className="mb-6 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
-              <div className="mb-3 flex items-center justify-between">
+          <div className="mb-6 grid gap-6 md:grid-cols-2">
+            {nextMatch ? (
+              <div className="flex flex-col rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-sm font-bold uppercase tracking-wider text-cde-azul">
+                    Próximo partido
+                  </span>
+                  <span className="rounded-full bg-cde-rojo/10 px-3 py-1 text-xs font-bold text-cde-rojo">
+                    {nextMatch.stage}
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col items-center justify-center gap-4">
+                  <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+                    <div className="flex min-w-0 items-center justify-end gap-2">
+                      <p className="truncate text-right text-lg font-extrabold text-cde-gris">
+                        {nextMatch.home.name}
+                      </p>
+                      <TeamShield src={nextMatch.home.logo} alt={nextMatch.home.name} size={40} />
+                    </div>
+                    <span className="rounded-lg bg-cde-azul px-4 py-2 text-sm font-black uppercase tracking-wider text-white">
+                      VS
+                    </span>
+                    <div className="flex min-w-0 items-center justify-start gap-2">
+                      <TeamShield src={nextMatch.away.logo} alt={nextMatch.away.name} size={40} />
+                      <p className="truncate text-lg font-extrabold text-cde-gris">
+                        {nextMatch.away.name}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="flex items-center justify-center gap-2 text-sm text-zinc-500">
+                    <CalendarDays className="h-4 w-4" />
+                    {formatNextMatchDate(nextMatch.startTime)}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-5">
                 <span className="text-sm font-bold uppercase tracking-wider text-cde-azul">
                   Próximo partido
                 </span>
-                <span className="rounded-full bg-cde-rojo/10 px-3 py-1 text-xs font-bold text-cde-rojo">
-                  {nextMatch.stage}
-                </span>
-              </div>
-              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-                <div className="flex items-center justify-end gap-2">
-                  <p className="text-right text-lg font-extrabold text-cde-gris">
-                    {nextMatch.home.name}
-                  </p>
-                  <TeamShield src={nextMatch.home.logo} alt={nextMatch.home.name} size={40} />
-                </div>
-                <span className="rounded-lg bg-cde-azul px-4 py-2 text-sm font-black uppercase tracking-wider text-white">
-                  VS
-                </span>
-                <div className="flex items-center justify-start gap-2">
-                  <TeamShield src={nextMatch.away.logo} alt={nextMatch.away.name} size={40} />
-                  <p className="text-lg font-extrabold text-cde-gris">
-                    {nextMatch.away.name}
-                  </p>
+                <div className="flex flex-1 items-center justify-center text-sm text-zinc-500">
+                  Sin partidos programados.
                 </div>
               </div>
-              <p className="mt-4 flex items-center justify-center gap-2 text-sm text-zinc-500">
-                <CalendarDays className="h-4 w-4" />
-                {formatNextMatchDate(nextMatch.startTime)}
-              </p>
-            </div>
-          ) : null}
+            )}
+
+            {lastFinished ? (
+              <div className="flex flex-col rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-sm font-bold uppercase tracking-wider text-cde-azul">
+                    Último resultado
+                  </span>
+                  <span className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-600">
+                    {lastFinished.competition}
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col items-center justify-center gap-4">
+                  <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+                    <div className="flex min-w-0 items-center justify-end gap-2">
+                      <p className="truncate text-right text-lg font-extrabold text-cde-gris">
+                        {lastFinished.home.name}
+                      </p>
+                      <TeamShield src={lastFinished.home.logo} alt={lastFinished.home.name} size={40} />
+                    </div>
+                    <span className="min-w-14 rounded-lg bg-cde-azul px-3 py-2 text-center font-mono text-lg font-black text-white">
+                      {lastFinished.homeScore} - {lastFinished.awayScore}
+                    </span>
+                    <div className="flex min-w-0 items-center justify-start gap-2">
+                      <TeamShield src={lastFinished.away.logo} alt={lastFinished.away.name} size={40} />
+                      <p className="truncate text-lg font-extrabold text-cde-gris">
+                        {lastFinished.away.name}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="flex items-center justify-center gap-2 text-sm text-zinc-500">
+                    <CalendarDays className="h-4 w-4" />
+                    {lastFinished.stage}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-5">
+                <span className="text-sm font-bold uppercase tracking-wider text-cde-azul">
+                  Último resultado
+                </span>
+                <div className="flex flex-1 items-center justify-center text-sm text-zinc-500">
+                  Sin resultados por el momento.
+                </div>
+              </div>
+            )}
+          </div>
 
           <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">
             Partidos
@@ -148,39 +206,6 @@ export default async function Home() {
 
         <div>
           <h2 className="mb-4 text-2xl font-extrabold text-cde-gris">
-            Último resultado
-          </h2>
-          {lastFinished ? (
-            <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
-              <div className="mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-zinc-500">
-                <span>{lastFinished.stage}</span>
-                <span>{lastFinished.competition}</span>
-              </div>
-              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-                <div className="flex items-center justify-end gap-2">
-                  <p className="truncate text-right text-sm font-semibold">
-                    {lastFinished.home.name}
-                  </p>
-                  <TeamShield src={lastFinished.home.logo} alt={lastFinished.home.name} size={28} />
-                </div>
-                <span className="min-w-14 rounded-md bg-zinc-100 px-2 py-1 text-center font-mono text-base font-bold">
-                  {lastFinished.homeScore} - {lastFinished.awayScore}
-                </span>
-                <div className="flex items-center justify-start gap-2">
-                  <TeamShield src={lastFinished.away.logo} alt={lastFinished.away.name} size={28} />
-                  <p className="truncate text-sm font-semibold">
-                    {lastFinished.away.name}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center text-sm text-zinc-500">
-              Sin resultados por el momento.
-            </div>
-          )}
-
-          <h2 className="mb-4 mt-8 text-2xl font-extrabold text-cde-gris">
             Galería
           </h2>
           <div className="grid grid-cols-2 gap-3">
