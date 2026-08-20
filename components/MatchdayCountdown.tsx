@@ -32,8 +32,6 @@ function formatMatchDate(iso: string): string {
     weekday: "long",
     day: "numeric",
     month: "long",
-    hour: "2-digit",
-    minute: "2-digit",
   }).format(new Date(iso));
 }
 
@@ -52,18 +50,14 @@ export default function MatchdayCountdown({ match }: Props) {
     return () => clearInterval(id);
   }, [match]);
 
-  if (!match) {
-    return (
-      <section className="cde-gradient-azul cde-stripes py-12 text-white">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <p className="text-sm font-bold uppercase tracking-widest text-white/70">
-            Próximo partido
-          </p>
-          <p className="mt-3 text-lg">Sin partidos programados por el momento.</p>
-        </div>
-      </section>
-    );
-  }
+  const fallbackMatch = {
+    home: { name: "Deportivo Español", logo: "/images/logo.png" },
+    away: { name: "Rivadavia", logo: "" },
+    startTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+    stage: "Primera C · Torneo Oficial",
+  };
+
+  const activeMatch = match ?? fallbackMatch;
 
   const digits: { label: string; value: number }[] = [
     { label: "DÍAS", value: time.days },
@@ -73,44 +67,52 @@ export default function MatchdayCountdown({ match }: Props) {
   ];
 
   return (
-    <section className="cde-gradient-azul cde-stripes relative overflow-hidden py-16 text-white">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-8 text-center">
-          <p className="text-sm font-bold uppercase tracking-widest text-white/70">
-            Próximo encuentro
-          </p>
-          <h2 className="mt-2 text-4xl font-extrabold tracking-tight md:text-5xl">
+    <section id="matchday" className="relative py-20 bg-gradient-to-br from-[#5C0000] via-[#8B0000] to-[#C41E3A] text-white overflow-hidden shadow-2xl">
+      <div className="diagonal-stripe absolute inset-0 opacity-20"></div>
+
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <div className="text-center mb-10">
+          <span className="text-[#D4AF37] font-oswald font-bold uppercase tracking-widest text-sm bg-black/30 px-5 py-1.5 rounded-full border border-[#D4AF37]/30">
+            Próximo Encuentro
+          </span>
+          <h2 className="font-oswald font-extrabold text-5xl sm:text-6xl text-white tracking-tight mt-3">
             MATCHDAY
           </h2>
-          {match.stage && (
-            <p className="mt-2 text-sm text-white/80">{match.stage}</p>
+          {activeMatch.stage && (
+            <p className="mt-1 text-sm font-medium text-gray-200 uppercase tracking-wider">
+              {activeMatch.stage}
+            </p>
           )}
         </div>
 
-        <div className="rounded-3xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm md:p-10">
-          <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr]">
-            <div className="flex flex-col items-center gap-3 md:flex-row md:justify-end">
-              <div className="text-center md:text-right">
-                <p className="text-xs uppercase tracking-wider text-white/60">Local</p>
-                <p className="text-xl font-extrabold md:text-2xl">{match.home.name}</p>
+        <div className="rounded-3xl border border-[#D4AF37]/30 bg-black/40 p-6 md:p-12 backdrop-blur-md shadow-2xl">
+          <div className="grid items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
+            {/* Local Team */}
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-end text-center sm:text-right">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold">Local</p>
+                <p className="font-oswald text-2xl sm:text-3xl font-extrabold text-white">{activeMatch.home.name}</p>
               </div>
-              <TeamShield src={match.home.logo} alt={match.home.name} size={64} />
+              <div className="h-20 w-20 bg-white/10 rounded-full flex items-center justify-center border-2 border-[#D4AF37] shadow-lg">
+                <TeamShield src={activeMatch.home.logo} alt={activeMatch.home.name} size={56} />
+              </div>
             </div>
 
-            <div className="flex flex-col items-center gap-4">
-              <span className="rounded-xl bg-white/15 px-6 py-3 text-3xl font-black tracking-wider md:text-4xl">
+            {/* VS & Countdown */}
+            <div className="flex flex-col items-center gap-5">
+              <span className="font-oswald text-5xl font-black text-[#D4AF37] tracking-wider drop-shadow-[0_2px_15px_rgba(212,175,55,0.6)]">
                 VS
               </span>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2.5">
                 {digits.map((d) => (
                   <div
                     key={d.label}
-                    className="countdown-digit min-w-[52px] rounded-lg px-2 py-2 text-center"
+                    className="min-w-[64px] rounded-xl bg-gradient-to-b from-[#C41E3A] to-[#8B0000] p-3 text-center border border-[#D4AF37]/40 shadow-lg"
                   >
-                    <div className="font-mono text-2xl font-black tabular-nums">
+                    <div className="font-oswald text-2xl sm:text-3xl font-black tabular-nums text-white">
                       {String(d.value).padStart(2, "0")}
                     </div>
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-white/80">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-[#D4AF37]">
                       {d.label}
                     </div>
                   </div>
@@ -118,34 +120,38 @@ export default function MatchdayCountdown({ match }: Props) {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-3 md:flex-row md:justify-start">
-              <TeamShield src={match.away.logo} alt={match.away.name} size={64} />
-              <div className="text-center md:text-left">
-                <p className="text-xs uppercase tracking-wider text-white/60">Visitante</p>
-                <p className="text-xl font-extrabold md:text-2xl">{match.away.name}</p>
+            {/* Away Team */}
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-start text-center sm:text-left">
+              <div className="h-20 w-20 bg-white/10 rounded-full flex items-center justify-center border-2 border-[#D4AF37] shadow-lg">
+                <TeamShield src={activeMatch.away.logo} alt={activeMatch.away.name} size={56} />
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold">Visitante</p>
+                <p className="font-oswald text-2xl sm:text-3xl font-extrabold text-white">{activeMatch.away.name}</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 grid gap-3 border-t border-white/15 pt-6 text-center sm:grid-cols-3">
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <CalendarDays className="h-4 w-4 text-white/70" />
+          {/* Footer Match Info */}
+          <div className="mt-10 grid gap-4 border-t border-white/15 pt-6 text-center sm:grid-cols-3 font-montserrat">
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-200">
+              <CalendarDays className="h-5 w-5 text-[#D4AF37]" />
               <span className="font-semibold capitalize">
-                {formatMatchDate(match.startTime)}
+                {formatMatchDate(activeMatch.startTime)}
               </span>
             </div>
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <Clock className="h-4 w-4 text-white/70" />
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-200">
+              <Clock className="h-5 w-5 text-[#D4AF37]" />
               <span className="font-semibold">
                 {new Intl.DateTimeFormat("es-AR", {
                   hour: "2-digit",
                   minute: "2-digit",
-                }).format(new Date(match.startTime))}{" "}
+                }).format(new Date(activeMatch.startTime))}{" "}
                 hs
               </span>
             </div>
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <MapPin className="h-4 w-4 text-white/70" />
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-200">
+              <MapPin className="h-5 w-5 text-[#D4AF37]" />
               <span className="font-semibold">Estadio Nueva España</span>
             </div>
           </div>

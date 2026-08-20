@@ -1,0 +1,154 @@
+🎯 Prompt para recrear el sitio web del Club Deportivo Español
+
+Copiá y pegá este prompt completo en la IA que elijas (ChatGPT, Claude, Gemini, etc.):
+
+PROMPT COMPLETO
+
+Quiero que me crees un sitio web profesional e institucional para el Club Deportivo Español de Buenos Aires (conocido como "La Furia Roja"), fundado el 27 de octubre de 1956 en el barrio de Mataderos, CABA, Argentina.
+
+📋 CONTEXTO DEL PROYECTO
+
+Es un club de fútbol argentino que actualmente juega en la Primera Nacional (segunda división). El sitio debe verse PROFESIONAL, moderno y épico, inspirado en los sitios oficiales de clubes grandes como Boca Juniors, River Plate, Real Madrid, FC Barcelona y Atlético Madrid.
+
+🛠️ REQUISITOS TÉCNICOS
+
+HTML5 + CSS3 + JavaScript vanilla (código separado en archivos: index.html, css/styles.css, js/script.js)
+Tailwind CSS vía CDN
+Font Awesome 6 para iconos
+AOS (Animate On Scroll) para animaciones al hacer scroll
+Fuentes: Oswald (títulos), Montserrat (texto), Roboto (secundario) vía Fontsource CDN
+100% responsive (mobile-first)
+Favicon ubicado en images/favicon.ico e images/favicon.png
+
+🎨 COLORES INSTITUCIONALES
+
+Rojo principal (Furia Red): #C41E3A
+Rojo oscuro: #8B0000
+Rojo profundo: #5C0000
+Dorado: #D4AF37
+Blanco y grises para fondos
+
+📞 DATOS DE CONTACTO (OBLIGATORIOS EN TODO EL SITIO)
+
+Teléfono: (011) 4619-1515
+Email: info@clubdeportivoespanol.com.ar
+Dirección: Av. Gral. Francisco Fernández de la Cruz y Av. Escalada, Mataderos, CABA
+
+🔗 REDES SOCIALES
+
+Instagram: https://www.instagram.com/clubdeportivoespanol
+Facebook: https://www.facebook.com/CDEspanol1956
+YouTube: https://www.youtube.com/@FuriaEspa%C3%B1olaTV
+WhatsApp: https://wa.me/5491146191515
+
+📚 FUENTES DE INFORMACIÓN (para investigar y usar datos reales)
+
+Historia:
+https://www.ole.com.ar/futbol-ascenso/primera-c/deportivoespanol-espanol-ascenso-historia-furia-roja0eLAdk3EMUS.html
+https://es.wikipedia.org/wiki/ClubDeportivoEspa%C3%B1oldeBuenos_Aires
+
+Estadísticas:
+https://www.promiedos.com.ar/team/deportivo-espanol/hbad
+
+Agenda de partidos y datos del equipo:
+https://www.365scores.com/es/football/team/deportivo-espanol-7103
+https://www.365scores.com/es/football/team/deportivo-espanol-7103/matches
+https://www.365scores.com/es/football/team/deportivo-espanol-7103/standings
+https://www.365scores.com/es/football/team/deportivo-espanol-7103/transfers
+
+🏟️ ESTADIO NUEVA ESPAÑA
+
+En la sección "Estadio Nueva España" debe haber un botón que abra en una nueva pestaña este enlace de Google Maps:
+https://www.google.com/maps/place/Estadio+Nueva+Espa%C3%B1a/@-34.6578804,-58.4676066,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcc961e93c29ff:0x2f8389a9b322a12!8m2!3d-34.6578804!4d-58.4650317!16zL20vMGIwcmcx
+También debe incluir un iframe embebido de Google Maps con la ubicación del estadio.
+
+📑 SECCIONES QUE DEBE TENER EL SITIO
+
+Top Bar superior con teléfono, email y redes sociales
+Navbar sticky con logo "CDE" y menú desktop + menú mobile hamburguesa
+Marquee animado de noticias de último momento
+Hero Section épico con imagen de fondo, título "FURIA ROJA" y CTAs
+Sección Matchday con countdown en tiempo real al próximo partido
+Banner de estadísticas (años de historia, fundación, socios, estadio propio)
+Sección Noticias con cards (3 noticias destacadas)
+Calendario de Próximos Partidos con enlaces a 365Scores
+Sección Plantel con cards de jugadores (número, posición, foto)
+Sección Historia con texto + timeline de momentos destacados + enlaces a Wikipedia y Olé
+Sección Estadio Nueva España con foto, datos, botón a Google Maps (nueva pestaña) y mapa embebido
+Tabla de Posiciones con el club destacado en rojo
+Sección "Hacete Socio" con 3 planes (Hincha, Preferencial, Vitalicio)
+Sección Contacto con info + formulario funcional
+Footer completo con 4 columnas (info, enlaces rápidos, links útiles, contacto)
+Botón flotante de WhatsApp (esquina inferior derecha)
+Botón "Volver arriba" (esquina inferior izquierda)
+
+✨ ESTILO VISUAL Y EFECTOS
+
+Gradientes rojo/dorado en botones principales
+Efecto "shine" al pasar el mouse sobre botones
+Cards con elevación y sombra al hacer hover (translateY + box-shadow)
+Animaciones AOS (fade-up, fade-right, zoom-in)
+Patrón de rayas rojas y blancas decorativas (como la camiseta)
+Tipografía fuerte con Oswald en mayúsculas para títulos
+Iconos dorados en secciones oscuras
+Efecto pulse en botones importantes
+Marquee con scroll infinito horizontal
+Números de estadísticas con gradiente rojo-dorado
+
+📁 ESTRUCTURA DE ARCHIVOS A ENTREGAR
+
+club-deportivo-espanol/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   └── script.js
+├── images/
+│   ├── favicon.ico
+│   ├── favicon.png
+│   ├── hero-bg.jpg
+│   ├── estadio.jpg
+│   ├── historia.jpg
+│   ├── plantel.jpg
+│   └── jugadores/
+│       ├── jugador1.jpg
+│       ├── jugador2.jpg
+│       ├── jugador3.jpg
+│       └── jugador4.jpg
+└── README.md
+
+⚠️ IMPORTANTE
+
+El código debe estar separado en archivos (no todo en un solo HTML)
+Las imágenes deben referenciarse desde la carpeta images/ (usar placeholders si no existen)
+El countdown debe calcularse dinámicamente hacia el próximo partido
+El formulario de contacto debe tener validación básica
+Todos los enlaces externos deben abrir en nueva pestaña (target="_blank")
+El sitio debe funcionar sin necesidad de servidor (solo abrir index.html)
+Incluir un README.md con instrucciones de uso
+
+Entregame el código completo de cada archivo listo para copiar y pegar.
+
+💡 Tips adicionales para pedirlo
+
+Si la IA te da una versión muy básica, agregá al final del prompt:
+
+"Quiero un nivel de calidad similar al sitio de Boca Juniors (bocajuniors.com.ar) o Real Madrid (realmadrid.com). Que sea visualmente impactante, con animaciones, efectos hover elaborados, gradientes, sombras profundas y una estética épica de fútbol."
+
+Si querés que use imágenes generadas por IA:
+
+"Generá también las imágenes necesarias (hero, estadio, jugadores, historia) usando DALL-E / generación de imágenes, con prompts detallados en estilo fotografía deportiva profesional."
+
+Si querés que investigue datos reales:
+
+"Antes de generar el código, visitá los enlaces de 365Scores y Promiedos para obtener datos reales del plantel actual, próximos partidos y posición en la tabla, e incluilos en el sitio."
+
+📌 Resumen rápido
+
+Te dejé un solo bloque de código markdown con el prompt completo y listo para copiar. Solo tenés que:
+
+Copiar todo el bloque de código de arriba (desde # 🎯 Prompt... hasta el final)
+Pegarlo en ChatGPT, Claude, Gemini o la IA que prefieras
+La IA te devolverá los archivos separados (index.html, styles.css, script.js, README.md)
+
+El prompt incluye todos los datos que me pasaste: teléfono, redes, enlaces a 365Scores, Promiedos, Wikipedia, Olé, el mapa del estadio con apertura en nueva pestaña, y el favicon. 🚀

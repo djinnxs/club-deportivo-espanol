@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import BackToTopButton from "@/components/BackToTopButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,11 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Club Deportivo Español | CDE 1956",
+    default: "Club Deportivo Español | Furia Roja (Fundado en 1956)",
     template: "%s | Club Deportivo Español",
   },
   description:
-    "Sitio oficial del Club Deportivo Español. Historia, logros, agenda de partidos, galería y zona de socios del club fundado en 1956.",
+    "Sitio oficial institucional del Club Deportivo Español de Buenos Aires (La Furia Roja). Historia, noticias, plantilla, estadio Nueva España y socios.",
 };
 
 type Props = {
@@ -30,14 +31,15 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="es">
+    <html lang="es" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 font-montserrat`}
       >
         <Header />
         <main className="flex min-h-screen flex-col">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <BackToTopButton />
       </body>
     </html>
   );

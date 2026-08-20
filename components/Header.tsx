@@ -1,63 +1,97 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ASSETS, CDE, NAV_LINKS } from "@/lib/config";
 import TopBar from "@/components/TopBar";
 
 export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <>
       <TopBar />
-      <header className="sticky top-0 z-50 bg-cde-azul text-white shadow-md">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-lg transition-all duration-300">
         <div className="cde-gradient h-1.5 w-full" aria-hidden />
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white/15 ring-2 ring-white/30">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+          <Link href="/" className="flex items-center gap-3 group">
+            <span className="flex h-13 w-13 items-center justify-center overflow-hidden rounded-full bg-[#C41E3A] border-2 border-[#D4AF37] shadow-md transition-transform group-hover:scale-105">
               <Image
                 src={ASSETS.logo}
-                alt={`${CDE.name} - escudo`}
-                width={44}
-                height={44}
-                className="h-11 w-11 object-contain"
+                alt={`${CDE.name} - Escudo`}
+                width={48}
+                height={48}
+                className="h-10 w-10 object-contain drop-shadow"
               />
             </span>
             <div className="leading-tight">
-              <span className="block text-lg font-extrabold tracking-tight">
-                Deportivo Español
+              <span className="font-oswald text-xl font-bold tracking-tight text-[#C41E3A] block">
+                DEPORTIVO ESPAÑOL
               </span>
-              <span className="block text-[11px] font-semibold uppercase tracking-widest text-white/70">
-                Club Deportivo Español · 1956
+              <span className="font-montserrat text-[11px] font-medium text-gray-500 uppercase tracking-wider block">
+                Fundado en 1956 · Furia Roja
               </span>
             </div>
           </Link>
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Principal">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Principal">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-md px-3 py-2 text-sm font-semibold text-white/85 transition-colors hover:bg-white/15 hover:text-white"
+                className="nav-link font-oswald text-sm font-bold uppercase tracking-wider text-gray-800 hover:text-[#C41E3A]"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
-          <div className="flex items-center gap-2">
-            <a
-              href={CDE.telefonoLink}
-              className="hidden items-center gap-1.5 rounded-md border border-white/30 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 lg:flex"
-            >
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-              <span className="hidden xl:inline">{CDE.telefono}</span>
-            </a>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-3">
             <Link
               href="/socios"
-              className="rounded-md px-4 py-2 text-sm font-bold text-white transition-colors cde-gradient hover:bg-cde-rojo-oscuro"
+              className="btn-primary rounded-lg px-5 py-2.5 font-oswald text-sm font-bold uppercase tracking-wider text-white border border-[#D4AF37]/40"
             >
-              Asociate
+              Hacete Socio
             </Link>
+
+            {/* Mobile menu toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden rounded-lg p-2 text-2xl text-[#C41E3A] hover:bg-gray-100 transition-colors"
+              aria-label="Abrir menú"
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-gray-100 bg-white px-4 pt-3 pb-6 shadow-xl animate-fade-in-up">
+            <div className="flex flex-col gap-3">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-oswald text-base font-bold uppercase text-gray-800 hover:text-[#C41E3A] py-2 border-b border-gray-100"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link
+                href="/socios"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-primary text-center rounded-lg py-3 font-oswald text-sm font-bold uppercase tracking-wider text-white mt-2"
+              >
+                Hacete Socio
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
     </>
   );

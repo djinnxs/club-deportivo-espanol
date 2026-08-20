@@ -17,10 +17,10 @@ const planes: Plan[] = [
     periodo: "/mes",
     icon: Star,
     beneficios: [
-      "Carnet de socio oficial",
-      "Descuentos en entradas",
-      "Newsletter institucional",
-      "Participación en asambleas",
+      "Carnet digital de socio oficial CDE",
+      "Acceso y descuentos en entradas",
+      "Newsletter con primicias de fútbol",
+      "Voto y participación en asambleas",
     ],
   },
   {
@@ -30,11 +30,11 @@ const planes: Plan[] = [
     icon: Crown,
     destacado: true,
     beneficios: [
-      "Todo lo del plan Hincha",
-      "Prioridad en compra de entradas",
-      "10% off en tienda oficial",
-      "Acceso a eventos exclusivos",
-      "Invitación a partidos históricos",
+      "Todo lo del plan Socio Hincha",
+      "Prioridad garantizada en compra de entradas",
+      "15% de descuento en la tienda oficial",
+      "Acceso libre a la platea local",
+      "Invitación a eventos e hitos institucionales",
     ],
   },
   {
@@ -44,93 +44,98 @@ const planes: Plan[] = [
     icon: Gem,
     beneficios: [
       "Todo lo del plan Preferencial",
-      "Carnet vitalicio dorado",
-      "Nombre en placa del estadio",
-      "Beneficios de por vida",
-      "Acceso VIP a eventos del club",
+      "Carnet físico vitalicio grabado en dorado",
+      "Nombre grabado en placa de honor del estadio",
+      "Beneficios sociales de por vida sin cuota",
+      "Acceso VIP y palco en partidos oficiales",
     ],
   },
 ];
 
 export default function MembershipPlans() {
   return (
-    <section id="planes" className="cde-gradient-azul cde-stripes py-16 text-white">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <p className="text-sm font-bold uppercase tracking-widest text-white/70">
-            Sumate a la Furia
-          </p>
-          <h2 className="mt-2 text-4xl font-extrabold tracking-tight md:text-5xl">
-            Hacete Socio
+    <section id="socios" className="py-20 bg-gradient-to-br from-[#5C0000] via-[#8B0000] to-[#C41E3A] text-white relative overflow-hidden">
+      <div className="diagonal-stripe absolute inset-0 opacity-15"></div>
+
+      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+        <div className="mb-16 text-center">
+          <span className="text-[#D4AF37] font-oswald font-bold uppercase tracking-widest text-sm bg-black/40 px-5 py-1.5 rounded-full border border-[#D4AF37]/30">
+            Formá Parte de la Familia Gallega
+          </span>
+          <h2 className="font-oswald font-extrabold text-5xl sm:text-6xl text-white tracking-tight mt-3">
+            HACETE SOCIO DEL CLUB
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-white/80">
-            Elegí el plan que mejor se adapte a vos. Tu aporte sostiene al club
-            y nos permite seguir creciendo.
+          <p className="font-montserrat text-gray-200 max-w-2xl mx-auto mt-4 text-base opacity-90">
+            Tu cuota sostiene el crecimiento del club, apoya a las divisiones inferiores e impulsa las obras en el Estadio Nueva España.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {planes.map((plan) => {
             const Icon = plan.icon;
+            const isHincha = plan.nombre === "Socio Hincha";
+            const cardClasses = plan.destacado
+              ? "bg-white text-gray-900 shadow-2xl md:-translate-y-4 border-4 border-[#D4AF37]"
+              : isHincha
+                ? "bg-gradient-to-br from-[#123a8f] via-[#0d2a6b] to-[#0a1e4a] text-white shadow-2xl border-2 border-[#D4AF37]/60 hover:border-[#D4AF37]"
+                : "border-2 border-white/20 bg-black/30 backdrop-blur-md text-white hover:border-[#D4AF37]";
+
             return (
               <div
                 key={plan.nombre}
-                className={`relative flex flex-col rounded-2xl p-8 transition-transform ${
-                  plan.destacado
-                    ? "bg-white text-cde-gris shadow-2xl md:-translate-y-4"
-                    : "border border-white/20 bg-white/10 backdrop-blur-sm text-white"
-                }`}
+                className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all duration-300 ${cardClasses}`}
               >
+
                 {plan.destacado && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-cde-rojo px-4 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                    Más elegido
+                  <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#C41E3A] border-2 border-[#D4AF37] px-5 py-1 text-xs font-oswald font-bold uppercase tracking-wider text-white shadow-lg">
+                    ★ MÁS ELEGIDO Y POPULAR
                   </span>
                 )}
 
-                <div className="mb-4 flex items-center gap-3">
-                  <span
-                    className={`flex h-14 w-14 items-center justify-center rounded-full ${
-                      plan.destacado ? "cde-gradient" : "bg-white/15"
-                    }`}
-                  >
-                    <Icon className="h-7 w-7 text-white" />
-                  </span>
-                  <h3 className="text-xl font-extrabold">{plan.nombre}</h3>
-                </div>
+                <div>
+                  <div className="mb-6 flex items-center gap-4">
+                    <span
+                      className={`flex h-14 w-14 items-center justify-center rounded-2xl ${plan.destacado ? "bg-[#C41E3A] text-[#D4AF37]" : "bg-white/15 text-[#D4AF37]"
+                        } shadow-md`}
+                    >
+                      <Icon className="h-7 w-7" />
+                    </span>
+                    <h3 className="font-oswald font-bold text-2xl tracking-tight">{plan.nombre}</h3>
+                  </div>
 
-                <div className="mb-6">
-                  <span className="text-4xl font-black">{plan.precio}</span>
-                  <span
-                    className={`text-sm ${
-                      plan.destacado ? "text-zinc-500" : "text-white/70"
-                    }`}
-                  >
-                    {plan.periodo}
-                  </span>
-                </div>
-
-                <ul className="mb-8 flex-1 space-y-3">
-                  {plan.beneficios.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-sm">
-                      <Check
-                        className={`mt-0.5 h-4 w-4 shrink-0 ${
-                          plan.destacado ? "text-cde-rojo" : "text-white"
+                  <div className="mb-8 pb-6 border-b border-gray-200/20">
+                    <span className="font-oswald text-4xl sm:text-5xl font-extrabold tracking-tight">{plan.precio}</span>
+                    <span
+                      className={`font-montserrat text-sm font-medium ml-1.5 ${plan.destacado ? "text-gray-500" : "text-gray-300"
                         }`}
-                      />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
+                    >
+                      {plan.periodo}
+                    </span>
+                  </div>
+
+                  <ul className="mb-8 space-y-3.5">
+                    {plan.beneficios.map((b) => (
+                      <li key={b} className="flex items-start gap-2.5 text-sm font-montserrat leading-snug">
+                        <Check
+                          className={`mt-0.5 h-4 w-4 shrink-0 font-bold ${plan.destacado ? "text-[#C41E3A]" : "text-[#D4AF37]"
+                            }`}
+                        />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <Link
                   href="/socios"
-                  className={`block rounded-md py-3 text-center text-sm font-bold transition-opacity hover:opacity-90 ${
-                    plan.destacado
-                      ? "cde-gradient text-white"
-                      : "bg-white text-cde-rojo"
-                  }`}
+                  className={`block w-full py-4 text-center rounded-xl font-oswald text-base font-bold uppercase tracking-wider transition-all ${plan.destacado
+                      ? "btn-primary text-white shadow-xl"
+                      : isHincha
+                        ? "bg-[#D4AF37] text-[#0a1e4a] hover:bg-yellow-400 font-extrabold shadow-xl border border-yellow-200"
+                        : "btn-primary border border-[#D4AF37]/40 text-white"
+                    }`}
                 >
-                  Elegir plan
+                  Asociarme Ahora
                 </Link>
               </div>
             );

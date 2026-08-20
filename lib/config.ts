@@ -8,8 +8,12 @@ export const CDE = {
   whatsappLink: "https://wa.me/5491146191515",
   email: "info@clubdeportivoespanol.com.ar",
   colors: {
-    rojo: "#e11d2e",
-    rojoOscuro: "#a31524",
+    furiaRed: "#C41E3A",
+    furiaDark: "#8B0000",
+    furiaDeeper: "#5C0000",
+    furiaGold: "#D4AF37",
+    rojo: "#C41E3A",
+    rojoOscuro: "#8B0000",
     azul: "#123a8f",
     blanco: "#ffffff",
     grisOscuro: "#1f2430",
@@ -67,11 +71,12 @@ export const ASSETS = {
 } as const;
 
 export const NAV_LINKS = [
-  { href: "/", label: "Inicio" },
-  { href: "/historia", label: "Historia" },
-  { href: "/logros", label: "Logros" },
-  { href: "/agenda", label: "Agenda" },
-  { href: "/galeria", label: "Galería" },
+  { href: "/#home", label: "Inicio" },
+  { href: "/#noticias", label: "Noticias" },
+  { href: "/#partidos", label: "Partidos" },
+  { href: "/#plantel", label: "Plantel" },
+  { href: "/#historia", label: "Historia" },
+  { href: "/#estadio", label: "Estadio" },
   { href: "/socios", label: "Socios" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/#contacto", label: "Contacto" },
 ] as const;

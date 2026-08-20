@@ -7,86 +7,84 @@ export default function StadiumSection() {
   const features = [
     {
       icon: MapPin,
-      title: "Ubicación",
-      desc: estadio.direccion,
+      title: "Ubicación Principal",
+      desc: "Av. Santiago de Compostela 3801, Parque Avellaneda, CABA",
     },
     {
       icon: Users,
-      title: "Capacidad",
-      desc: "Más de 10.000 espectadores",
+      title: "Capacidad de Espectadores",
+      desc: "Más de 32.500 espectadores",
     },
     {
       icon: Calendar,
-      title: "Inauguración",
-      desc: "Década de 1960 · Remodelado en 2007",
+      title: "Inauguración e Historia",
+      desc: "Inaugurado el 11 de Febrero de 1981 · Propiedad de CDE",
     },
   ];
 
   return (
-    <section id="estadio" className="bg-zinc-50 py-16">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-bold uppercase tracking-widest text-cde-rojo">
-            Nuestra casa
-          </p>
-          <h2 className="mt-2 text-4xl font-extrabold tracking-tight text-cde-azul md:text-5xl">
-            {estadio.nombre}
+    <section id="estadio" className="bg-gray-100 py-20 relative overflow-hidden">
+      <div className="container mx-auto px-4 max-w-7xl relative z-10">
+        <div className="text-center mb-16">
+          <span className="text-[#C41E3A] font-oswald font-bold uppercase tracking-widest text-sm bg-red-100 px-4 py-1.5 rounded-full">
+            Nuestra Casa
+          </span>
+          <h2 className="font-oswald font-extrabold text-5xl sm:text-6xl text-gray-900 mt-3 section-title">
+            ESTADIO NUEVA ESPAÑA
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-zinc-600">
-            El templo de la Furia Roja. Ubicado en el corazón de Mataderos,
-            es donde el Club Deportivo Español hace valer su localía.
+          <p className="font-montserrat text-gray-600 max-w-2xl mx-auto mt-4 text-base">
+            El templo del pueblo gallego en Buenos Aires. Donde cada fin de semana late la Furia Roja.
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div className="rounded-3xl overflow-hidden border-4 border-[#C41E3A]/20 shadow-2xl bg-white h-[450px]">
             <iframe
               src={estadio.googleMapsEmbed}
               width="100%"
-              height="400"
+              height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title={`Mapa de ${estadio.nombre}`}
-              className="w-full"
+              className="w-full h-full"
             />
           </div>
 
-          <div className="flex flex-col justify-center">
-            <h3 className="text-2xl font-extrabold text-cde-gris">
-              El hogar de la Furia Roja
+          <div className="flex flex-col justify-center bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-gray-200">
+            <h3 className="font-oswald font-bold text-3xl text-gray-900 mb-3">
+              El Baluarte de Mataderos
             </h3>
-            <p className="mt-3 leading-relaxed text-zinc-600">
-              El <strong className="text-cde-rojo">{estadio.nombre}</strong> es
-              mucho más que un estadio: es el punto de encuentro de generaciones de
-              hinchas que llevan los colores del club en el corazón.
+            <p className="font-montserrat text-gray-700 leading-relaxed mb-8">
+              El <strong className="text-[#C41E3A]">{estadio.nombre}</strong> es mucho más que un campo de juego: representa el esfuerzo de socios e inmigrantes que levantaron este gigante deportivo en el sur porteño.
             </p>
 
-            <div className="mt-6 space-y-4">
-              {features.map((f) => (
-                <div key={f.title} className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full cde-gradient">
-                    <f.icon className="h-5 w-5 text-white" />
+            <div className="space-y-6">
+              {features.map((f, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#C41E3A] to-[#8B0000] text-[#D4AF37] shadow-md border border-[#D4AF37]/30">
+                    <f.icon className="h-6 w-6" />
                   </span>
                   <div>
-                    <p className="font-bold text-cde-gris">{f.title}</p>
-                    <p className="text-sm text-zinc-600">{f.desc}</p>
+                    <h4 className="font-oswald font-bold text-lg text-gray-900">{f.title}</h4>
+                    <p className="font-montserrat text-sm text-gray-600 mt-0.5">{f.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <a
-              href={estadio.googleMaps}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-md cde-gradient px-6 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
-            >
-              <MapPin className="h-4 w-4" />
-              Ver en Google Maps
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
+            <div className="mt-10">
+              <a
+                href={estadio.googleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-oswald text-base font-bold uppercase tracking-wider text-white shadow-xl w-full sm:w-auto"
+              >
+                <span>📍</span> Abrir Ubicación en Google Maps
+                <ExternalLink className="h-4 w-4 ml-1" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -2,40 +2,28 @@ import { CDE } from "@/lib/config";
 
 export default function NewsMarquee() {
   const items = [
-    { icon: "🔴", text: "¡Somos la Furia Roja!" },
-    { icon: "📞", text: `Contacto: ${CDE.telefono}` },
-    { icon: "🏟️", text: "Estadio Nueva España · Mataderos" },
-    { icon: "⚽", text: "Seguí todos los partidos en vivo" },
-    { icon: "🔴", text: "Desde 1956 · Más de 68 años de historia" },
-    { icon: "📱", text: "Seguinos en @clubdeportivoespanol" },
+    { icon: "🔴", text: "¡Últimas Noticias del Club!" },
+    { icon: "⚽", text: "Próximo partido: Deportivo Español vs Rivadavia - Sábado 22/08 - 15:30hs" },
+    { icon: "🏟️", text: "Estadio Nueva España - ¡Vení a alentar a la Furia Roja!" },
+    { icon: "📞", text: `Contacto Oficina de Socios: ${CDE.telefono}` },
+    { icon: "🏆", text: "Desde 1956 · Más de 68 años de orgullo e historia viva" },
+    { icon: "📱", text: "Instagram: @clubdeportivoespanol" },
   ];
 
-  const duplicated = [...items, ...items];
+  const duplicated = [...items, ...items, ...items];
 
   return (
-    <div className="cde-gradient overflow-hidden border-y border-white/10">
-      <div className="flex whitespace-nowrap py-2">
-        <div className="flex animate-marquee items-center gap-8 pr-8">
+    <div className="bg-[#C41E3A] text-white py-2.5 overflow-hidden border-y border-[#8B0000] shadow-inner">
+      <div className="flex whitespace-nowrap">
+        <div className="flex animate-marquee items-center gap-10">
           {duplicated.map((item, i) => (
             <span
               key={i}
-              className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white"
+              className="flex items-center gap-2.5 font-oswald text-sm font-bold uppercase tracking-wider text-white"
             >
-              <span>{item.icon}</span>
+              <span className="text-base">{item.icon}</span>
               <span>{item.text}</span>
-              <span className="text-white/40">•</span>
-            </span>
-          ))}
-        </div>
-        <div className="flex animate-marquee items-center gap-8 pr-8" aria-hidden>
-          {duplicated.map((item, i) => (
-            <span
-              key={`dup-${i}`}
-              className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white"
-            >
-              <span>{item.icon}</span>
-              <span>{item.text}</span>
-              <span className="text-white/40">•</span>
+              <span className="text-[#D4AF37] font-black text-lg mx-2">★</span>
             </span>
           ))}
         </div>
